@@ -1,6 +1,6 @@
 # NetTemplate
 
-React TypeScript with .NET Core Web API template
+.NET 9 Web API Clean Architecture Template
 
 
 ## **1. Agregar una Migración con EF Core**
@@ -29,6 +29,5 @@ docker-compose -p nettemplate up --build -d
 
 * **API Health Check:** [http://localhost:5000/health](http://localhost:5000/health)
 * **API Swagger UI:** [http://localhost:5000/swagger](http://localhost:5000/swagger)
-* **React Client:** [http://localhost:3000](http://localhost:3000)
 
 

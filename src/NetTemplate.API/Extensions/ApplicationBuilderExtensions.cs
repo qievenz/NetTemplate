@@ -1,4 +1,4 @@
-﻿using HealthChecks.UI.Client;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using NetTemplate.Infrastructure.Persistence;
@@ -31,8 +31,6 @@ namespace NetTemplate.API.Extensions
                 }
             }
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
@@ -41,7 +39,6 @@ namespace NetTemplate.API.Extensions
             app.UseAuthorization();
             app.UseExceptionHandler();
             app.MapControllers();
-            app.MapFallbackToFile("/index.html");
             app.UseHealthChecks("/health", new HealthCheckOptions
             {
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse

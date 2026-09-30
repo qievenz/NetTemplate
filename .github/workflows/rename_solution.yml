@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Permite ejecución manual desde la pestaña Actions
     inputs:
       placeholder_name_cap:
-        description: 'Old Name (Capitalized, e.g., ReactTSWithNetCoreTemplate)'
+        description: 'Old Name (Capitalized, e.g., NetTemplate)'
         required: true
       new_name_cap:
         description: 'New Name (Capitalized, e.g., MyNewProject)'
@@ -39,7 +39,7 @@ jobs:
             NEW_NAME_CAP="${{ github.event.inputs.new_name_cap }}" # <-- Usa el nuevo input
           else
             echo "Push trigger: Using default placeholder and deriving new name from repo."
-            PLACEHOLDER_CAP="ReactTSWithNetCoreTemplate" # <-- Asegúrate que este sea tu placeholder por defecto
+            PLACEHOLDER_CAP="NetTemplate" # <-- Asegúrate que este sea tu placeholder por defecto
             NEW_NAME_RAW=$(echo '${{ github.repository }}' | awk -F / '{print $2}')
             NEW_NAME_CAP="$(tr '[:lower:]' '[:upper:]' <<< ${NEW_NAME_RAW:0:1})${NEW_NAME_RAW:1}"
           fi
