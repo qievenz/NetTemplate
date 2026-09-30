@@ -1,4 +1,4 @@
-# ReactTSWithNetCoreTemplate
+# NetTemplate
 
 React TypeScript with .NET Core Web API template
 
@@ -10,7 +10,7 @@ Asegúrate de ejecutar este comando desde la **raíz de tu proyecto** (donde se 
 Hay que realizar una migracion luego de cada cambio que se haga en el esquema.
 
 ```bash
-dotnet ef migrations add [NombreDeTuMigracion] -p src\ReactTSWithNetCoreTemplate.Infrastructure -s src\ReactTSWithNetCoreTemplate.API
+dotnet ef migrations add [NombreDeTuMigracion] -p src\NetTemplate.Infrastructure -s src\NetTemplate.API
 ```
 
 ## **2. Levantar los Servicios (Build & Run)**
@@ -19,8 +19,8 @@ Este comando detiene y elimina los contenedores anteriores, reconstruye las imá
 
 
 ```bash
-docker-compose -p reacttswithnetcoretemplate down ;
-docker-compose -p reacttswithnetcoretemplate up --build -d
+docker-compose -p nettemplate down ;
+docker-compose -p nettemplate up --build -d
 ```
 
 ---
