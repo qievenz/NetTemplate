@@ -1,0 +1,84 @@
+services:
+  # reacttswithnetcoretemplate.mssql:
+  #   image: "mcr.microsoft.com/mssql/server:2022-latest"
+  #   container_name: reacttswithnetcoretemplate_mssql_db
+  #   environment:
+  #     - SA_PASSWORD=ChangeThis!!1
+  #     - ACCEPT_EULA=Y
+  #   volumes:
+  #     - reacttswithnetcoretemplate_mssql_data:/var/opt/mssql
+  #   healthcheck:
+  #       test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "ChangeThis!!1", "-Q", "SELECT 1"]
+  #       interval: 10s
+  #       timeout: 5s
+  #       retries: 5
+  #       start_period: 20s
+
+  # reacttswithnetcoretemplate.redis:
+  #   image: redis:7.2b
+  #   container_name: reacttswithnetcoretemplate_redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - reacttswithnetcoretemplate_redis_data:/data
+  #   restart: always
+  #   command: redis-server --save 60 1 --loglevel warning
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #     start_period: 10s
+        
+  reacttswithnetcoretemplate.postgres:
+    image: postgres:16-alpine
+    container_name: reacttswithnetcoretemplate_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: reacttswithnetcoretemplate_usr
+      POSTGRES_PASSWORD: ChangeThis!!1
+      POSTGRES_DB: reacttswithnetcoretemplate_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - reacttswithnetcoretemplate_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+  reacttswithnetcoretemplate.api:
+    image: ${DOCKER_REGISTRY-}reacttswithnetcoretemplateapi
+    container_name: reacttswithnetcoretemplate_api
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: src/ReactTSWithNetCoreTemplate.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Release
+      - ASPNETCORE_URLS=http://+:80
+      - TZ=America/Buenos_Aires
+     # - ConnectionStrings__DefaultConnection=Server=reacttswithnetcoretemplate_mssql_db,1433;Database=ReactTSWithNetCoreTemplateDB;User=sa;Password=ChangeThis!!1;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=reacttswithnetcoretemplate_postgres_db;Port=5432;Database=reacttswithnetcoretemplate_db;Username=reacttswithnetcoretemplate_usr;Password=ChangeThis!!1
+      - ApiKeyAuthOptions__SecretToken=SecretTokenToTest123
+
+  reacttswithnetcoretemplate.client:
+    image: ${DOCKER_REGISTRY-}reacttswithnetcoretemplateclient
+    build:
+      context: src/reacttswithnetcoretemplate.client
+      dockerfile: ./Dockerfile
+    container_name: reacttswithnetcoretemplate_client
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - reacttswithnetcoretemplate.api
+
+volumes:
+ # reacttswithnetcoretemplate_mssql_data:
+ reacttswithnetcoretemplate_pg_data:
+
+# docker compose --env-file .env.local up -d
+   

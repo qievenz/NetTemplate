@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Fullstack",
+    "Projects": [
+      {
+        "Path": "src\\ReactTSWithNetCoreTemplate.API\\ReactTSWithNetCoreTemplate.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "src\\reacttswithnetcoretemplate.client\\reacttswithnetcoretemplate.client.esproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
